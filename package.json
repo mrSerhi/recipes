@@ -1,0 +1,14 @@
+{
+  "name": "recipes",
+  "version": "1.0.0",
+  "description": "recipese project",
+  "main": "index.js",
+  "repository": "git@github.com:mrSerhi/recipes.git",
+  "author": "Serhii Marushchenko <serhii.mar90@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {},
+  "devDependencies": {
+    "webpack": "^4.29.0"
+  }
+}
