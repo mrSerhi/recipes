@@ -8257,10 +8257,68 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Search__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(310);
-// API key 00d3c700655c1e829d1f56184ce8fdb2
-// serach https://www.food2fork.com/api/search
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-var search = new _models_Search__WEBPACK_IMPORTED_MODULE_0__["default"]('pizza'); // search.getResults();
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+// index.js is a global contsoller
+
+/** Global state of app:
+ *  1.Serach obj
+ *  2.Current recipe obj
+ *  3.Shopping list obj
+ *  4.Liked recipes
+ */
+
+var state = {};
+
+function controlSearch() {
+  return _controlSearch.apply(this, arguments);
+}
+
+function _controlSearch() {
+  _controlSearch = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee() {
+    var query;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            // 1) get query from view
+            query = "pizza"; // must be fn or method
+
+            if (!query) {
+              _context.next = 6;
+              break;
+            }
+
+            // 2) create new Search obj and save in state
+            state.search = new _models_Search__WEBPACK_IMPORTED_MODULE_0__["default"](query); // 3)prepare UI for display results
+            // 4)search for recipes
+
+            _context.next = 5;
+            return state.search.getResults();
+
+          case 5:
+            // 5)render results on UI
+            // console.log(state.search.result)
+            console.log(state.search.result.status);
+
+          case 6:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, this);
+  }));
+  return _controlSearch.apply(this, arguments);
+}
+
+document.querySelector(".search").addEventListener("submit", function (e) {
+  e.preventDefault();
+  controlSearch();
+});
 
 /***/ }),
 /* 283 */
@@ -10028,6 +10086,10 @@ module.exports = function spread(callback) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -10043,20 +10105,59 @@ function () {
     _classCallCheck(this, Search);
 
     this.query = query;
-  }
+  } // getResults() {
+  //   const APIKEY = `00d3c700655c1e829d1f56184ce8fdb2`;
+  //   // return promise
+  //   return axios(`https://www.food2fork.com/api/search?key=${APIKEY}&q=${this.query}`)
+  //     .then(response => {
+  //       // this.result = response.data.recipes;
+  //       this.result = response;
+  //     })
+  //     .catch(e => console.log(e));
+  // }
+
 
   _createClass(Search, [{
     key: "getResults",
-    value: function getResults() {
-      var _this = this;
+    value: function () {
+      var _getResults = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var APIKEY, response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                APIKEY = "00d3c700655c1e829d1f56184ce8fdb2";
+                _context.prev = 1;
+                _context.next = 4;
+                return axios("https://www.food2fork.com/api/search?key=".concat(APIKEY, "&q=").concat(this.query));
 
-      var APIKEY = "00d3c700655c1e829d1f56184ce8fdb2";
-      axios("https://www.food2fork.com/api/search?key=".concat(APIKEY, "&q=").concat(this.query)).then(function (response) {
-        _this.result = response.data.recipes; // console.info(this.result);
-      }).catch(function (e) {
-        return console.log(e);
-      });
-    }
+              case 4:
+                response = _context.sent;
+                this.result = response;
+                _context.next = 11;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
+                console.error(_context.t0);
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[1, 8]]);
+      }));
+
+      function getResults() {
+        return _getResults.apply(this, arguments);
+      }
+
+      return getResults;
+    }()
   }]);
 
   return Search;
