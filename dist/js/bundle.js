@@ -8293,23 +8293,20 @@ function _controlSearch() {
             query = _views_searchView__WEBPACK_IMPORTED_MODULE_1__["getInputValue"](); // must be fn or method
 
             if (!query) {
-              _context.next = 6;
+              _context.next = 7;
               break;
             }
 
             // 2) create new Search obj and save in state
-            state.search = new _models_Search__WEBPACK_IMPORTED_MODULE_2__["default"](query); // 3)prepare UI for display results
-            // 4)search for recipes
+            state.search = new _models_Search__WEBPACK_IMPORTED_MODULE_2__["default"](query); // 3)prepare UI for display results (cliar input fieald and results list before new search query)
 
-            _context.next = 5;
+            _views_searchView__WEBPACK_IMPORTED_MODULE_1__["clearInputFieald"]();
+            _views_searchView__WEBPACK_IMPORTED_MODULE_1__["clearResults"](); // 4)search for recipes
+
+            _context.next = 7;
             return state.search.getResults();
 
-          case 5:
-            // 5)render results on UI
-            // console.log(state.search.result)
-            console.log(state.search.result.status);
-
-          case 6:
+          case 7:
           case "end":
             return _context.stop();
         }
@@ -10139,6 +10136,7 @@ function () {
 
               case 4:
                 response = _context.sent;
+                // this.result = response.data.recipes;
                 this.result = response;
                 _context.next = 11;
                 break;
@@ -10177,7 +10175,8 @@ function () {
 __webpack_require__.r(__webpack_exports__);
 var elements = {
   searchForm: getElementNode("search"),
-  searchFormInput: getElementNode("search__field")
+  searchFormInput: getElementNode("search__field"),
+  resultList: getElementNode('results__list')
 };
 
 function getElementNode(node) {
@@ -10193,10 +10192,28 @@ function getElementNode(node) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInputValue", function() { return getInputValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearInputFieald", function() { return clearInputFieald; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderResults", function() { return renderResults; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearResults", function() { return clearResults; });
 /* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(311);
+
+
+function renderRecipe(recipe) {
+  var markup = "\n    <li>\n        <a class=\"results__link\" href=\"".concat(recipe.recipe_id, "\">\n            <figure class=\"results__fig\">\n                <img src=\"").concat(recipe.image_url, "\" alt=\"").concat(recipe.title, "\">\n            </figure>\n            <div class=\"results__data\">\n                <h4 class=\"results__name\">").concat(recipe.title, "</h4>\n                <p class=\"results__author\">").concat(recipe.publisher, "</p>\n            </div>\n        </a>\n    </li>\n");
+  _base__WEBPACK_IMPORTED_MODULE_0__["default"].resultList.insertAdjacentElement('beforeend', markup);
+}
 
 var getInputValue = function getInputValue() {
   return _base__WEBPACK_IMPORTED_MODULE_0__["default"].searchFormInput.value;
+};
+var clearInputFieald = function clearInputFieald() {
+  _base__WEBPACK_IMPORTED_MODULE_0__["default"].searchFormInput.value = '';
+};
+var renderResults = function renderResults(recipes) {
+  recipes.forEach(renderRecipe);
+};
+var clearResults = function clearResults() {
+  _base__WEBPACK_IMPORTED_MODULE_0__["default"].resultList.innerHTML = '';
 };
 
 /***/ })

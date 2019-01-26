@@ -1,6 +1,7 @@
 const elements = {
   searchForm: getElementNode("search"),
-  searchFormInput: getElementNode("search__field")
+  searchFormInput: getElementNode("search__field"),
+  resultList: getElementNode('results__list')
 };
 
 function getElementNode(node) {

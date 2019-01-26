@@ -18,14 +18,13 @@ async function controlSearch() {
   if (query) {
     // 2) create new Search obj and save in state
     state.search = new Search(query);
-    // 3)prepare UI for display results
-
+    // 3)prepare UI for display results (cliar input fieald and results list before new search query)
+    searchView.clearInputFieald();
+    searchView.clearResults();
     // 4)search for recipes
     await state.search.getResults();
-
     // 5)render results on UI
-    // console.log(state.search.result)
-    console.log(state.search.result.status);
+    // searchView.renderResults(state.search.result);
   }
 }
 elements.searchForm.addEventListener("submit", e => {

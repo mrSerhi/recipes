@@ -22,6 +22,7 @@ class Search {
       const response = await axios(
         `https://www.food2fork.com/api/search?key=${APIKEY}&q=${this.query}`
       );
+      // this.result = response.data.recipes;
       this.result = response;
     } catch (e) {
       console.error(e);
