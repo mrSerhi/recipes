@@ -8252,34 +8252,15 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 
 /***/ }),
 /* 282 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _models_Search__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(310);
 // API key 00d3c700655c1e829d1f56184ce8fdb2
 // serach https://www.food2fork.com/api/search
-var axios = __webpack_require__(283); // async function getResults(q) {
-//   const APIKEY = `00d3c700655c1e829d1f56184ce8fdb2`;
-//   let query = await fetch(
-//     `https://www.food2fork.com/api/search?key=${APIKEY}&q=${q}`
-//   );
-//   try {
-//     let result = await query.json();
-//     let recipes = result => console.log(response.data.recipes);
-//     recipes(result);
-//   } catch (e) {
-//     console.log(e);
-//   }
-// }
-// getResults("chicken breast");
 
-
-function getResults(q) {
-  var APIKEY = "00d3c700655c1e829d1f56184ce8fdb2";
-  axios("https://www.food2fork.com/api/search?key=".concat(APIKEY, "&q=").concat(q)).then(function (response) {
-    return console.log(response.data.recipes);
-  }).catch(function (e) {
-    return console.log(e);
-  });
-} // getResults("chicken breast");
+var search = new _models_Search__WEBPACK_IMPORTED_MODULE_0__["default"]('pizza'); // search.getResults();
 
 /***/ }),
 /* 283 */
@@ -10040,6 +10021,48 @@ module.exports = function spread(callback) {
   };
 };
 
+
+/***/ }),
+/* 310 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var axios = __webpack_require__(283);
+
+var Search =
+/*#__PURE__*/
+function () {
+  function Search(query) {
+    _classCallCheck(this, Search);
+
+    this.query = query;
+  }
+
+  _createClass(Search, [{
+    key: "getResults",
+    value: function getResults() {
+      var _this = this;
+
+      var APIKEY = "00d3c700655c1e829d1f56184ce8fdb2";
+      axios("https://www.food2fork.com/api/search?key=".concat(APIKEY, "&q=").concat(this.query)).then(function (response) {
+        _this.result = response.data.recipes; // console.info(this.result);
+      }).catch(function (e) {
+        return console.log(e);
+      });
+    }
+  }]);
+
+  return Search;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Search);
 
 /***/ })
 /******/ ]);
