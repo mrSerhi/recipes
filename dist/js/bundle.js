@@ -10199,21 +10199,48 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function renderRecipe(recipe) {
-  var markup = "\n    <li>\n        <a class=\"results__link\" href=\"".concat(recipe.recipe_id, "\">\n            <figure class=\"results__fig\">\n                <img src=\"").concat(recipe.image_url, "\" alt=\"").concat(recipe.title, "\">\n            </figure>\n            <div class=\"results__data\">\n                <h4 class=\"results__name\">").concat(recipe.title, "</h4>\n                <p class=\"results__author\">").concat(recipe.publisher, "</p>\n            </div>\n        </a>\n    </li>\n");
-  _base__WEBPACK_IMPORTED_MODULE_0__["default"].resultList.insertAdjacentElement('beforeend', markup);
+  var markup = "\n    <li>\n        <a class=\"results__link\" href=\"".concat(recipe.recipe_id, "\">\n            <figure class=\"results__fig\">\n                <img src=\"").concat(recipe.image_url, "\" alt=\"").concat(recipe.title, "\">\n            </figure>\n            <div class=\"results__data\">\n                <h4 class=\"results__name\">").concat(trimRecipeTitle(recipe.title), "</h4>\n                <p class=\"results__author\">").concat(recipe.publisher, "</p>\n            </div>\n        </a>\n    </li>\n");
+  _base__WEBPACK_IMPORTED_MODULE_0__["default"].resultList.insertAdjacentElement("beforeend", markup);
+}
+/* explanation
+  const title = 'the big pizza with tomattos';
+  0 + cur.length(the) = 3 <= 17 - ['the']
+  3 + cur.length(big) = 6 <= 17 - ['the', 'big']
+  6 + cur.length(pizza) = 11 <= 17 - ['the', 'big', 'pizza']
+  11 + cur.length(with) = 15 <= 17 - ['the', 'big', 'pizza', 'with']
+  11 + cur.length(tomattos) = 23 <= 17 - return 11 + 8 (23)
+*/
+
+
+function trimRecipeTitle(title) {
+  var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 17;
+  var trimedTitle = [];
+
+  if (title.length > max) {
+    title.split(" ").reduce(function (acc, cur) {
+      if (acc + cur.length <= max) {
+        trimedTitle.push(cur);
+      }
+
+      return acc + cur.length;
+    }, 0);
+    return "".concat(trimedTitle.join(" "), "...");
+  }
+
+  return title;
 }
 
 var getInputValue = function getInputValue() {
   return _base__WEBPACK_IMPORTED_MODULE_0__["default"].searchFormInput.value;
 };
 var clearInputFieald = function clearInputFieald() {
-  _base__WEBPACK_IMPORTED_MODULE_0__["default"].searchFormInput.value = '';
+  _base__WEBPACK_IMPORTED_MODULE_0__["default"].searchFormInput.value = "";
 };
 var renderResults = function renderResults(recipes) {
   recipes.forEach(renderRecipe);
 };
 var clearResults = function clearResults() {
-  _base__WEBPACK_IMPORTED_MODULE_0__["default"].resultList.innerHTML = '';
+  _base__WEBPACK_IMPORTED_MODULE_0__["default"].resultList.innerHTML = "";
 };
 
 /***/ })
