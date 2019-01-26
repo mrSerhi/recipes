@@ -1,6 +1,8 @@
 // index.js is a global contsoller
-import Search from "./models/Search";
+import elements from "./views/base";
+import * as searchView from "./views/searchView";
 
+import Search from "./models/Search";
 /** Global state of app:
  *  1.Serach obj
  *  2.Current recipe obj
@@ -11,7 +13,8 @@ const state = {};
 
 async function controlSearch() {
   // 1) get query from view
-  const query = "pizza"; // must be fn or method
+  const query = searchView.getInputValue(); // must be fn or method
+
   if (query) {
     // 2) create new Search obj and save in state
     state.search = new Search(query);
@@ -25,7 +28,7 @@ async function controlSearch() {
     console.log(state.search.result.status);
   }
 }
-document.querySelector(".search").addEventListener("submit", e => {
+elements.searchForm.addEventListener("submit", e => {
   e.preventDefault();
   controlSearch();
 });

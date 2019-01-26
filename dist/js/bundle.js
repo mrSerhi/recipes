@@ -8256,12 +8256,16 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _models_Search__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(310);
+/* harmony import */ var _views_base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(311);
+/* harmony import */ var _views_searchView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(312);
+/* harmony import */ var _models_Search__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(310);
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 // index.js is a global contsoller
+
+
 
 /** Global state of app:
  *  1.Serach obj
@@ -8286,7 +8290,7 @@ function _controlSearch() {
         switch (_context.prev = _context.next) {
           case 0:
             // 1) get query from view
-            query = "pizza"; // must be fn or method
+            query = _views_searchView__WEBPACK_IMPORTED_MODULE_1__["getInputValue"](); // must be fn or method
 
             if (!query) {
               _context.next = 6;
@@ -8294,7 +8298,7 @@ function _controlSearch() {
             }
 
             // 2) create new Search obj and save in state
-            state.search = new _models_Search__WEBPACK_IMPORTED_MODULE_0__["default"](query); // 3)prepare UI for display results
+            state.search = new _models_Search__WEBPACK_IMPORTED_MODULE_2__["default"](query); // 3)prepare UI for display results
             // 4)search for recipes
 
             _context.next = 5;
@@ -8315,7 +8319,7 @@ function _controlSearch() {
   return _controlSearch.apply(this, arguments);
 }
 
-document.querySelector(".search").addEventListener("submit", function (e) {
+_views_base__WEBPACK_IMPORTED_MODULE_0__["default"].searchForm.addEventListener("submit", function (e) {
   e.preventDefault();
   controlSearch();
 });
@@ -10164,6 +10168,36 @@ function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (Search);
+
+/***/ }),
+/* 311 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var elements = {
+  searchForm: getElementNode("search"),
+  searchFormInput: getElementNode("search__field")
+};
+
+function getElementNode(node) {
+  return document.querySelector(".".concat(node));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (elements);
+
+/***/ }),
+/* 312 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInputValue", function() { return getInputValue; });
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(311);
+
+var getInputValue = function getInputValue() {
+  return _base__WEBPACK_IMPORTED_MODULE_0__["default"].searchFormInput.value;
+};
 
 /***/ })
 /******/ ]);
