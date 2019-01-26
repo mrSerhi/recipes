@@ -1,7 +1,8 @@
-// Global app controller
+import str from "./views/searchView";
+// import { sum, mult, ID } from "./models/Search";
+// import { sum as sumOfNum, mult as multOfNum, ID } from "./models/Search";
+import * as searchModels from "./models/Search";
 
-import Person from './text';
-
-const user = new Person('Oleg');
-console.log(user.sayHi());
-console.log(user.displayOptions(10, 50));
+console.log(`Sum of two numbers = ${searchModels.sum(2, 4)}`);
+console.log(`Multy = ${searchModels.mult(2)}`);
+console.log(`what the string come for: ${str} and ID: ${searchModels.ID}`);

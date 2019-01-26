@@ -8256,12 +8256,15 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _text__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(283);
-// Global app controller
+/* harmony import */ var _views_searchView__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(283);
+/* harmony import */ var _models_Search__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(284);
+ // import { sum, mult, ID } from "./models/Search";
+// import { sum as sumOfNum, mult as multOfNum, ID } from "./models/Search";
 
-var user = new _text__WEBPACK_IMPORTED_MODULE_0__["default"]('Oleg');
-console.log(user.sayHi());
-console.log(user.displayOptions(10, 50));
+
+console.log("Sum of two numbers = ".concat(_models_Search__WEBPACK_IMPORTED_MODULE_1__["sum"](2, 4)));
+console.log("Multy = ".concat(_models_Search__WEBPACK_IMPORTED_MODULE_1__["mult"](2)));
+console.log("what the string come for: ".concat(_views_searchView__WEBPACK_IMPORTED_MODULE_0__["default"], " and ID: ").concat(_models_Search__WEBPACK_IMPORTED_MODULE_1__["ID"]));
 
 /***/ }),
 /* 283 */
@@ -8269,40 +8272,24 @@ console.log(user.displayOptions(10, 50));
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+/* harmony default export */ __webpack_exports__["default"] = ('String from search view module');
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+/***/ }),
+/* 284 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-console.log('Module exported!');
-console.info('Yo!!! webpack dev server');
-
-var Person =
-/*#__PURE__*/
-function () {
-  function Person(name) {
-    _classCallCheck(this, Person);
-
-    this.name = name;
-  }
-
-  _createClass(Person, [{
-    key: "sayHi",
-    value: function sayHi() {
-      return "Hi, my name is ".concat(this.name);
-    }
-  }, {
-    key: "displayOptions",
-    value: function displayOptions(a, b) {
-      return a + b;
-    }
-  }]);
-
-  return Person;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (Person);
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sum", function() { return sum; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mult", function() { return mult; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ID", function() { return ID; });
+var sum = function sum(a, b) {
+  return a + b;
+};
+var mult = function mult(a) {
+  return a * a;
+};
+var ID = [122, 456, 124, 55, 65];
 
 /***/ })
 /******/ ]);
