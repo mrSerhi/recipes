@@ -1,1 +1,0 @@
-export default 'String from search view module';
