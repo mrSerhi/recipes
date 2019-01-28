@@ -8326,6 +8326,22 @@ function _controlSearch() {
 _views_base__WEBPACK_IMPORTED_MODULE_0__["elements"].searchForm.addEventListener("submit", function (e) {
   e.preventDefault();
   controlSearch();
+}); // controller for pagination
+
+_views_base__WEBPACK_IMPORTED_MODULE_0__["elements"].pagination.addEventListener("click", function (e) {
+  var targetButton = e.target.closest(".btn-inline");
+
+  if (targetButton) {
+    try {
+      var dataAttr = +targetButton.dataset.goto; // number of page
+
+      _views_searchView__WEBPACK_IMPORTED_MODULE_1__["clearResults"](); // at now clear results and pagination
+
+      _views_searchView__WEBPACK_IMPORTED_MODULE_1__["renderResults"](state.search.result, dataAttr);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 });
 
 /***/ }),
@@ -8369,8 +8385,8 @@ var clearSpinner = function clearSpinner() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInputValue", function() { return getInputValue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearInputFieald", function() { return clearInputFieald; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderResults", function() { return renderResults; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearResults", function() { return clearResults; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderResults", function() { return renderResults; });
 /* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(283);
 
 
@@ -8407,20 +8423,20 @@ function trimRecipeTitle(title) {
 }
 /**
  *
- * @param {number} page : number of page
- * @param {string} direction : must be 'prev' or 'next'
+ * @param {Number} page : number of page
+ * @param {String} direction : must be 'prev' or 'next'
  * data-goTo for added event-handler in the fuature
  */
 
 
 function renderButton(page, direction) {
-  return "\n    <button class=\"btn-inline results__btn--".concat(direction, "\" data-goTo=").concat(direction === "prev" ? page - 1 : page + 1, ">\n      <svg class=\"search__icon\">\n          <use href=\"img/icons.svg#icon-triangle-").concat(direction === "prev" ? "left" : "right", "\">\n          </use>\n      </svg>\n      <span>Page ").concat(direction === "prev" ? page - 1 : page + 1, "</span>\n    </button>\n  ");
+  return "\n    <button class=\"btn-inline results__btn--".concat(direction, "\" data-goto=").concat(direction === "prev" ? page - 1 : page + 1, ">\n      <svg class=\"search__icon\">\n          <use href=\"img/icons.svg#icon-triangle-").concat(direction === "prev" ? "left" : "right", "\">\n          </use>\n      </svg>\n      <span>Page ").concat(direction === "prev" ? page - 1 : page + 1, "</span>\n    </button>\n  ");
 }
 /**
  *
- * @param {number} page : number of the page
- * @param {number} numOfResults : amount of the returns recipes
- * @param {number} limit : amount of the visibility recipes in the page
+ * @param {Number} page : number of the page
+ * @param {Number} numOfResults : amount of the returns recipes
+ * @param {Number} limit : amount of the visibility recipes in the page
  */
 
 
@@ -8450,11 +8466,15 @@ var getInputValue = function getInputValue() {
 var clearInputFieald = function clearInputFieald() {
   _base__WEBPACK_IMPORTED_MODULE_0__["elements"].searchFormInput.value = "";
 };
+var clearResults = function clearResults() {
+  _base__WEBPACK_IMPORTED_MODULE_0__["elements"].resultList.innerHTML = "";
+  _base__WEBPACK_IMPORTED_MODULE_0__["elements"].pagination.innerHTML = "";
+};
 /**
  * fn for pagination
- * @param {object} recipes from API
- * @param {number} page number of page
- * @param {number} limit results on page
+ * @param {Array} recipes array of objects from API
+ * @param {Number} page number of page
+ * @param {Number} limit results on page
  */
 
 var renderResults = function renderResults(recipes) {
@@ -8466,9 +8486,6 @@ var renderResults = function renderResults(recipes) {
   recipes.slice(start, end).forEach(renderRecipe); // render pagination button(s)
 
   renderPaginationButtons(page, recipes.length, limit);
-};
-var clearResults = function clearResults() {
-  _base__WEBPACK_IMPORTED_MODULE_0__["elements"].resultList.innerHTML = "";
 };
 
 /***/ }),

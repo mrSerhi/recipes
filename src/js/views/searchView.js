@@ -41,13 +41,13 @@ function trimRecipeTitle(title, max = 17) {
 
 /**
  *
- * @param {number} page : number of page
- * @param {string} direction : must be 'prev' or 'next'
+ * @param {Number} page : number of page
+ * @param {String} direction : must be 'prev' or 'next'
  * data-goTo for added event-handler in the fuature
  */
 function renderButton(page, direction) {
   return `
-    <button class="btn-inline results__btn--${direction}" data-goTo=${
+    <button class="btn-inline results__btn--${direction}" data-goto=${
     direction === "prev" ? page - 1 : page + 1
   }>
       <svg class="search__icon">
@@ -63,9 +63,9 @@ function renderButton(page, direction) {
 
 /**
  *
- * @param {number} page : number of the page
- * @param {number} numOfResults : amount of the returns recipes
- * @param {number} limit : amount of the visibility recipes in the page
+ * @param {Number} page : number of the page
+ * @param {Number} numOfResults : amount of the returns recipes
+ * @param {Number} limit : amount of the visibility recipes in the page
  */
 function renderPaginationButtons(page, numOfResults, limit) {
   // how many pages we have
@@ -89,25 +89,28 @@ function renderPaginationButtons(page, numOfResults, limit) {
   elements.pagination.insertAdjacentHTML("afterbegin", button);
 }
 
-export const getInputValue = () => elements.searchFormInput.value;
-export const clearInputFieald = () => {
-  elements.searchFormInput.value = "";
-};
-
 /**
  * fn for pagination
- * @param {object} recipes from API
- * @param {number} page number of page
- * @param {number} limit results on page
+ * @param {Array} recipes array of objects from API
+ * @param {Number} page number of page
+ * @param {Number} limit results on page
  */
 export const renderResults = (recipes, page = 1, limit = 10) => {
   // render of current page
-  const start = (page - 1) * limit;
-  const end = page * limit;
+  const start = (page - 1) * limit; // 0 or 10 or 20 or 30...
+  const end = page * limit; // 10 or 20 or 30...
   recipes.slice(start, end).forEach(renderRecipe);
   // render pagination button(s)
   renderPaginationButtons(page, recipes.length, limit);
 };
+
+export const getInputValue = () => elements.searchFormInput.value;
+
+export const clearInputFieald = () => {
+  elements.searchFormInput.value = "";
+};
+
 export const clearResults = () => {
   elements.resultList.innerHTML = "";
+  elements.pagination.innerHTML = "";
 };

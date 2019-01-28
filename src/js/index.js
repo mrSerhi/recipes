@@ -4,7 +4,7 @@ import * as searchView from "./views/searchView";
 import Search from "./models/Search";
 
 /** Global state of app:
- *  1.Serach obj
+ *  1.Search obj
  *  2.Current recipe obj
  *  3.Shopping list obj
  *  4.Liked recipes
@@ -18,18 +18,38 @@ async function controlSearch() {
   if (query) {
     // 2) create new Search obj and save in state
     state.search = new Search(query);
+
     // 3)prepare UI for display results (cliar input fieald and results list before new search query)
     searchView.clearInputFieald();
     searchView.clearResults();
     spinner(elements.result); // display spinner when data loading from server
+
     // 4)search for recipes
     await state.search.getResults();
+
     // 5)render results on UI
     clearSpinner();
     searchView.renderResults(state.search.result);
   }
 }
+// controller for form
 elements.searchForm.addEventListener("submit", e => {
   e.preventDefault();
   controlSearch();
+});
+
+// controller for pagination
+elements.pagination.addEventListener("click", e => {
+  let targetButton = e.target.closest(".btn-inline");
+  const currentState = state.search.result;
+
+  if (targetButton) {
+    try {
+      const dataAttr = +targetButton.dataset.goto; // number of page
+      searchView.clearResults(); // at now clear results and pagination
+      searchView.renderResults(currentState, dataAttr);  
+    } catch (e) {
+      console.error(e);
+    }
+  }
 });
