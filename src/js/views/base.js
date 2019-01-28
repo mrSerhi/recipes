@@ -3,14 +3,15 @@ function getElementNode(node) {
 }
 
 const elementsClassString = {
-  loader: ".loader"
+  loader: "loader"
 };
 
 export const elements = {
   searchForm: getElementNode("search"),
   searchFormInput: getElementNode("search__field"),
   result: getElementNode("results"),
-  resultList: getElementNode("results__list")
+  resultList: getElementNode("results__list"),
+  pagination: getElementNode("results__pages")
 };
 
 export const spinner = parent => {

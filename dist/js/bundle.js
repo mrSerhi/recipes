@@ -8342,13 +8342,14 @@ function getElementNode(node) {
 }
 
 var elementsClassString = {
-  loader: ".loader"
+  loader: "loader"
 };
 var elements = {
   searchForm: getElementNode("search"),
   searchFormInput: getElementNode("search__field"),
   result: getElementNode("results"),
-  resultList: getElementNode("results__list")
+  resultList: getElementNode("results__list"),
+  pagination: getElementNode("results__pages")
 };
 var spinner = function spinner(parent) {
   var template = "\n    <div class=\"".concat(elementsClassString.loader, "\">\n      <svg>\n        <use href=\"img/icons.svg#icon-cw\"></use>\n      </svg>\n    </div>\n  ");
@@ -8377,7 +8378,7 @@ function renderRecipe(recipe) {
   var markup = "\n    <li>\n        <a class=\"results__link\" href=\"".concat(recipe.recipe_id, "\">\n            <figure class=\"results__fig\">\n                <img src=\"").concat(recipe.image_url, "\" alt=\"").concat(recipe.title, "\">\n            </figure>\n            <div class=\"results__data\">\n                <h4 class=\"results__name\">").concat(trimRecipeTitle(recipe.title), "</h4>\n                <p class=\"results__author\">").concat(recipe.publisher, "</p>\n            </div>\n        </a>\n    </li>\n");
   _base__WEBPACK_IMPORTED_MODULE_0__["elements"].resultList.insertAdjacentHTML("beforeend", markup);
 }
-/* explanation
+/* explanation:
   const title = 'the big pizza with tomattos';
   0 + cur.length(the) = 3 <= 17 - ['the']
   3 + cur.length(big) = 6 <= 17 - ['the', 'big']
@@ -8404,6 +8405,44 @@ function trimRecipeTitle(title) {
 
   return title;
 }
+/**
+ *
+ * @param {number} page : number of page
+ * @param {string} direction : must be 'prev' or 'next'
+ * data-goTo for added event-handler in the fuature
+ */
+
+
+function renderButton(page, direction) {
+  return "\n    <button class=\"btn-inline results__btn--".concat(direction, "\" data-goTo=").concat(direction === "prev" ? page - 1 : page + 1, ">\n      <svg class=\"search__icon\">\n          <use href=\"img/icons.svg#icon-triangle-").concat(direction === "prev" ? "left" : "right", "\">\n          </use>\n      </svg>\n      <span>Page ").concat(direction === "prev" ? page - 1 : page + 1, "</span>\n    </button>\n  ");
+}
+/**
+ *
+ * @param {number} page : number of the page
+ * @param {number} numOfResults : amount of the returns recipes
+ * @param {number} limit : amount of the visibility recipes in the page
+ */
+
+
+function renderPaginationButtons(page, numOfResults, limit) {
+  // how many pages we have
+  var pages = Math.ceil(numOfResults / limit); // 30 / 10 = 3 or 75 / 10 = 8
+
+  var button;
+
+  if (page === 1 && pages > 1) {
+    // only button to next
+    button = renderButton(page, "next");
+  } else if (page < pages) {
+    // both of buttons
+    button = "\n      ".concat(renderButton(page, "prev"), "\n      ").concat(renderButton(page, "next"), "\n    ");
+  } else if (page === pages && pages > 1) {
+    // only button to prev
+    button = renderButton(page, "prev");
+  }
+
+  _base__WEBPACK_IMPORTED_MODULE_0__["elements"].pagination.insertAdjacentHTML("afterbegin", button);
+}
 
 var getInputValue = function getInputValue() {
   return _base__WEBPACK_IMPORTED_MODULE_0__["elements"].searchFormInput.value;
@@ -8411,8 +8450,22 @@ var getInputValue = function getInputValue() {
 var clearInputFieald = function clearInputFieald() {
   _base__WEBPACK_IMPORTED_MODULE_0__["elements"].searchFormInput.value = "";
 };
+/**
+ * fn for pagination
+ * @param {object} recipes from API
+ * @param {number} page number of page
+ * @param {number} limit results on page
+ */
+
 var renderResults = function renderResults(recipes) {
-  recipes.forEach(renderRecipe);
+  var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
+  // render of current page
+  var start = (page - 1) * limit;
+  var end = page * limit;
+  recipes.slice(start, end).forEach(renderRecipe); // render pagination button(s)
+
+  renderPaginationButtons(page, recipes.length, limit);
 };
 var clearResults = function clearResults() {
   _base__WEBPACK_IMPORTED_MODULE_0__["elements"].resultList.innerHTML = "";
