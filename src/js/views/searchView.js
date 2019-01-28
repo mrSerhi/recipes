@@ -1,4 +1,4 @@
-import elements from "./base";
+import { elements } from "./base";
 
 function renderRecipe(recipe) {
   const markup = `
@@ -14,7 +14,7 @@ function renderRecipe(recipe) {
         </a>
     </li>
 `;
-  elements.resultList.insertAdjacentElement("beforeend", markup);
+  elements.resultList.insertAdjacentHTML("beforeend", markup);
 }
 
 /* explanation

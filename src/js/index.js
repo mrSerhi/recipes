@@ -1,8 +1,8 @@
 // index.js is a global contsoller
-import elements from "./views/base";
+import { elements, spinner, clearSpinner } from "./views/base";
 import * as searchView from "./views/searchView";
-
 import Search from "./models/Search";
+
 /** Global state of app:
  *  1.Serach obj
  *  2.Current recipe obj
@@ -21,10 +21,12 @@ async function controlSearch() {
     // 3)prepare UI for display results (cliar input fieald and results list before new search query)
     searchView.clearInputFieald();
     searchView.clearResults();
+    spinner(elements.result); // display spinner when data loading from server
     // 4)search for recipes
     await state.search.getResults();
     // 5)render results on UI
-    // searchView.renderResults(state.search.result);
+    clearSpinner();
+    searchView.renderResults(state.search.result);
   }
 }
 elements.searchForm.addEventListener("submit", e => {
