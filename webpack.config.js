@@ -9,7 +9,8 @@ module.exports = {
   },
   mode: "none",
   devServer: {
-    contentBase: "./dist"
+    contentBase: path.join(__dirname, "dist"),
+    compress: true
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -28,7 +29,7 @@ module.exports = {
       }
     ]
   },
-  watch: true,
+  // watch: true,
   watchOptions: {
     ignored: /node_modules/
   }

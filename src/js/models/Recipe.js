@@ -17,7 +17,7 @@ class Recipe {
       this.sourceUrl = response.data.recipe.source_url;
       this.ingredients = response.data.recipe.ingredients;
     } catch (e) {
-      console.warn(e);
+      console.warn("Some error in getRecipe fn", e);
     }
   }
 

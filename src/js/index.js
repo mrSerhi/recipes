@@ -28,12 +28,16 @@ async function controlSearch() {
     searchView.clearResults();
     spinner(elements.result); // display spinner when data loading from server
 
-    // 4)search for recipes
-    await state.search.getResults();
+    try {
+      // 4)search for recipes
+      await state.search.getResults();
 
-    // 5)render results on UI
-    clearSpinner();
-    searchView.renderResults(state.search.result);
+      // 5)render results on UI
+      clearSpinner();
+      searchView.renderResults(state.search.result);
+    } catch (e) {
+      console.warn("Some error in controlSearch fn", e);
+    }
   }
 }
 
@@ -52,7 +56,7 @@ elements.pagination.addEventListener("click", e => {
       searchView.clearResults(); // at now clear results and pagination
       searchView.renderResults(currentState, dataAttr);
     } catch (e) {
-      console.error(e);
+      console.warn("Something wrong in pagination handler", e);
     }
   }
 });
@@ -61,9 +65,34 @@ elements.pagination.addEventListener("click", e => {
  * Recipe controller
  */
 
-function controlRecipe() {
-  const hash = window.location.hash;
-  console.log(hash);
+async function controlRecipe() {
+  // get to id from URL(hash)
+  const ID = window.location.hash.replace("#", ""); // pure number
+  if (ID) {
+    // prepaire UI for changes
+
+    // create new Pecipe obj and save in state
+    state.recipe = new Recipe(ID);
+
+    try {
+      // get data from API
+      await state.recipe.getRecipe();
+
+      // call methods from recipe class for cacl
+      state.recipe.calcCookingTime();
+      state.recipe.calcServingsPersons();
+
+      // render Recipe view
+      console.log(state.recipe);
+    } catch (e) {
+      console.warn("Something wrong in controlRecipe fn...", e);
+    }
+  }
 }
 
-window.addEventListener('hashchange', controlRecipe);
+/*
+we may needed to see result even user add page to bookmark and reopen 
+with selected recipes hash. For this cases we use event 'load'. When hash not selected
+event do not hired, becouse event 'hashchange' will be hired when hash is changes
+*/
+["hashchange", "load"].forEach(e => window.addEventListener(e, controlRecipe));
