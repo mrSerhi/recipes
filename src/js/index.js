@@ -60,6 +60,10 @@ elements.pagination.addEventListener("click", e => {
 /**
  * Recipe controller
  */
-  const recipe = new Recipe(46956);
-  // recipe.getRecipe();
-  // console.log(recipe)
+
+function controlRecipe() {
+  const hash = window.location.hash;
+  console.log(hash);
+}
+
+window.addEventListener('hashchange', controlRecipe);
