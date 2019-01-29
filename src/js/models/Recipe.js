@@ -20,6 +20,17 @@ class Recipe {
       console.warn(e);
     }
   }
+
+  calcCookingTime() {
+    // imagine, we have a 15 min for cooking for each 3 ingredients
+    const numOfIng = this.ingredients.length;
+    const periods = Math.ceil(numOfIng / 3);
+    this.cookingTime = periods * 15;
+  }
+
+  calcServingsPersons() {
+    this.serving = 4;
+  }
 }
 
 export default Recipe;
