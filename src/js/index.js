@@ -36,6 +36,7 @@ async function controlSearch() {
       clearSpinner();
       searchView.renderResults(state.search.result);
     } catch (e) {
+      clearSpinner(); // clear sppinner even we have an error
       console.warn("Some error in controlSearch fn", e);
     }
   }
