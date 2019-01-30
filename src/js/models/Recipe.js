@@ -31,6 +31,52 @@ class Recipe {
   calcServingsPersons() {
     this.serving = 4;
   }
+
+  parseIngredients() {
+    // parse getting ingregient from server on longest unit and replace their on short
+    const unitLongest = [
+      "tablespoons",
+      "tablespoon",
+      "ounce",
+      "ounces",
+      "teaspoon",
+      "teaspoons",
+      "cups",
+      "pounds"
+    ];
+    const unitShort = [
+      "tbsp",
+      "tbsp",
+      "oz",
+      "oz",
+      "tsp",
+      "tsp",
+      "cup",
+      "pound"
+    ];
+
+    const parseIngredients = this.ingredients.map(el => {
+      let ingredient = el.toLowerCase();
+
+      /**
+       * replace block:
+       *  output: ["tbsp", "tbsp", "oz", "ozs", "tsp", "tsps", "cup", "pound"]
+       * You may see in array [ozs] or [tsps], that because we use .replase method,
+       * which replaced unit on part, plus added ending of replacement unit! unitLongest["ounces"] => unitShort["oz"] + "s";
+       * under if else statement.
+       */
+      unitLongest.forEach((unit, i) => {
+        ingredient = ingredient.replace(unit, unitShort[i]);
+      });
+
+      // remove parentheses
+      ingredient = ingredient.replace(/ *\([^)]*\) */g, " "); // should be space
+
+      // parse ingr into count, unit and itself
+      return ingredient;
+    });
+    this.ingredients = parseIngredients;
+  }
 }
 
 export default Recipe;

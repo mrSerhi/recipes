@@ -82,7 +82,8 @@ async function controlRecipe() {
       // call methods from recipe class for cacl
       state.recipe.calcCookingTime();
       state.recipe.calcServingsPersons();
-
+      state.recipe.parseIngredients();
+      
       // render Recipe view
       console.log(state.recipe);
     } catch (e) {
