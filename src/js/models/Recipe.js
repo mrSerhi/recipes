@@ -37,10 +37,10 @@ class Recipe {
     const unitLongest = [
       "tablespoons",
       "tablespoon",
-      "ounce",
       "ounces",
-      "teaspoon",
+      "ounce",
       "teaspoons",
+      "teaspoon",
       "cups",
       "pounds"
     ];
@@ -61,9 +61,9 @@ class Recipe {
       /**
        * replace block:
        *  output: ["tbsp", "tbsp", "oz", "ozs", "tsp", "tsps", "cup", "pound"]
-       * You may see in array [ozs] or [tsps], that because we use .replase method,
-       * which replaced unit on part, plus added ending of replacement unit! unitLongest["ounces"] => unitShort["oz"] + "s";
-       * under if else statement.
+       * If You see in array [ozs] or [tsps], that because in unitLongest, item comes first
+       * without end "s". To swap their. ["ounces", "ounce"...]
+       *
        */
       unitLongest.forEach((unit, i) => {
         ingredient = ingredient.replace(unit, unitShort[i]);
@@ -72,8 +72,50 @@ class Recipe {
       // remove parentheses
       ingredient = ingredient.replace(/ *\([^)]*\) */g, " "); // should be space
 
-      // parse ingr into count, unit and itself
-      return ingredient;
+      // parse each ingredient into count, unit and itself
+      // and return like a obj altogether
+      const splitedIngredient = ingredient.split(" ");
+      const unitIndex = splitedIngredient.findIndex(item => {
+        unitShort.includes(item);
+      });
+      let objIngredients;
+
+      if (unitIndex > -1) {
+        // unit in fire
+        // ex. [4 , 1/2, "cup"], arrOfNum = [4, '1/2'] --> "4 + 1/2" --> eval("4 + 1/2") --> 4.5
+        // ex. [4, "cup"], arrOfNum = [4]
+        const arrOfNum = splitedIngredient.slice(0, unitIndex);
+        let count;
+
+        if (arrOfNum.length === 1) {
+          // may comes 1st on ex. 4- or 2-, for that we need replace on plus and use fn eval
+          count = eval(arrOfNum[0].replace("-", "+"));
+        } else {
+          count = eval(splitedIngredient.slice(0, unitIndex).join("+"));
+        }
+
+        objIngredients = {
+          count,
+          unit: splitedIngredient[unitIndex],
+          ingredient: splitedIngredient.slice(unitIndex + 1)
+        };
+      } else if (parseInt(splitedIngredient[0])) {
+        // comes 1st item is not a unit, but is a number
+        objIngredients = {
+          count: parseInt(splitedIngredient[0]),
+          unit: "",
+          ingredient: splitedIngredient.slice(1)
+        };
+      } else if (unitIndex === -1) {
+        // do not have a unit or number from first position
+        objIngredients = {
+          count: 1,
+          unit: "",
+          ingredient
+        };
+      }
+
+      return objIngredients;
     });
     this.ingredients = parseIngredients;
   }
