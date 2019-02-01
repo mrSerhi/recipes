@@ -1,4 +1,28 @@
 import { elements } from "./base";
+import Fraction from "fraction.js";
+
+// formating count number with fraction
+function formatCount(count) {
+  // ex. count = 2.5 --> Fraction --> 2 1/2
+  // ex. count = 0.5 --> Fraction --> 1/2
+  if (count) {
+    const [int, dec] = count
+      .toString()
+      .split(".")
+      .map(num => +num);
+
+    if (!dec) return count; // ex. 2
+    if (int === 0) {
+      const fr = new Fraction(count);
+      return `${fr.numerator}/${fr.denominator}`; // ex. 1/2
+    } else {
+      const fr = new Fraction(count - int); // 2.5 - 2
+      return `${int} ${fr.numerator}/${fr.denominator}`; // 2 1/2
+    }
+  }
+
+  return "?";
+}
 
 function createIngredient(ingrObj) {
   return `
@@ -6,7 +30,7 @@ function createIngredient(ingrObj) {
         <svg class="recipe__icon">
             <use href="img/icons.svg#icon-check"></use>
         </svg>
-        <div class="recipe__count">${ingrObj.count}</div>
+        <div class="recipe__count">${formatCount(ingrObj.count)}</div>
         <div class="recipe__ingredient">
             <span class="recipe__unit">${ingrObj.unit}</span>
             ${ingrObj.ingredient}
