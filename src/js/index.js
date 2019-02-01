@@ -1,6 +1,8 @@
 // index.js is a global contsoller
 import { elements, spinner, clearSpinner } from "./views/base";
 import * as searchView from "./views/searchView";
+import * as recipeView from "./views/recipeView";
+
 import Search from "./models/Search";
 import Recipe from "./models/Recipe";
 
@@ -26,7 +28,7 @@ async function controlSearch() {
     // 3)prepare UI for display results (cliar input fieald and results list before new search query)
     searchView.clearInputFieald();
     searchView.clearResults();
-    spinner(elements.result); // display spinner when data loading from server
+    spinner(elements.result); // display spinner when data loading from server, in arg must have parent element
 
     try {
       // 4)search for recipes
@@ -71,7 +73,9 @@ async function controlRecipe() {
   const ID = window.location.hash.replace("#", ""); // pure number
   if (ID) {
     // prepaire UI for changes
-
+    recipeView.clearRecipe();
+    spinner(elements.recipe);
+    
     // create new Pecipe obj and save in state
     state.recipe = new Recipe(ID);
 
@@ -79,14 +83,17 @@ async function controlRecipe() {
       // get data from API
       await state.recipe.getRecipe();
 
-      // call methods from recipe class for cacl
+      // call methods from recipe class for cacl and parse
       state.recipe.calcCookingTime();
       state.recipe.calcServingsPersons();
       state.recipe.parseIngredients();
-      
+
       // render Recipe view
-      console.log(state.recipe);
+      clearSpinner();
+      recipeView.clearRecipe();
+      recipeView.renderRecipe(state.recipe);
     } catch (e) {
+      clearSpinner();
       console.warn("Something wrong in controlRecipe fn...", e);
     }
   }
