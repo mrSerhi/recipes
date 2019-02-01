@@ -114,3 +114,17 @@ export const clearResults = () => {
   elements.resultList.innerHTML = "";
   elements.pagination.innerHTML = "";
 };
+// selected unselected recipe
+export const selectedRecipe = id => {
+  const arrayFromRecipesNodes = Array.from(
+    document.querySelectorAll(".results__link")
+  );
+
+  arrayFromRecipesNodes.forEach(el => {
+    el.classList.remove("results__link--active");
+  });
+
+  document
+    .querySelector(`a[href="#${id}"]`)
+    .classList.add("results__link--active");
+};

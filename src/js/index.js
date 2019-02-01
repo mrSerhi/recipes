@@ -75,7 +75,10 @@ async function controlRecipe() {
     // prepaire UI for changes
     recipeView.clearRecipe();
     spinner(elements.recipe);
-    
+
+    // highlite selected recipe item
+    if (state.search) searchView.selectedRecipe(ID);
+
     // create new Pecipe obj and save in state
     state.recipe = new Recipe(ID);
 
