@@ -11,7 +11,8 @@ export const elements = {
   searchFormInput: getElementNode("search__field"),
   result: getElementNode("results"),
   resultList: getElementNode("results__list"),
-  pagination: getElementNode("results__pages")
+  pagination: getElementNode("results__pages"),
+  recipe: getElementNode("recipe")
 };
 
 export const spinner = parent => {
