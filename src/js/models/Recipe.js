@@ -55,6 +55,8 @@ class Recipe {
       "pound"
     ];
 
+    const units = [...unitShort, "kg", "g"];
+
     const parseIngredients = this.ingredients.map(el => {
       let ingredient = el.toLowerCase();
 
@@ -66,7 +68,7 @@ class Recipe {
        *
        */
       unitLongest.forEach((unit, i) => {
-        ingredient = ingredient.replace(unit, unitShort[i]);
+        ingredient = ingredient.replace(unit, units[i]);
       });
 
       // remove parentheses
