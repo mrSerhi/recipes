@@ -121,6 +121,22 @@ class Recipe {
     });
     this.ingredients = parseIngredients;
   }
+
+  /**
+   *
+   * @param {String} type should be 'dec' or 'inc'
+   */
+  updatingServings(type) {
+    // servings
+    const updateServingNum = type === "dec" ? --this.serving : ++this.serving;
+
+    // ingredients
+    this.ingredients.forEach(ing => {
+      ing.count *= updateServingNum / this.serving;
+    });
+
+    this.serving = updateServingNum;
+  }
 }
 
 export default Recipe;

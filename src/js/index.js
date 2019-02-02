@@ -95,6 +95,8 @@ async function controlRecipe() {
       clearSpinner();
       recipeView.clearRecipe();
       recipeView.renderRecipe(state.recipe);
+
+      // console.log(state.recipe);
     } catch (e) {
       clearSpinner();
       console.warn("Something wrong in controlRecipe fn...", e);
@@ -105,6 +107,21 @@ async function controlRecipe() {
 /*
 we may needed to see result even user add page to bookmark and reopen 
 with selected recipes hash. For this cases we use event 'load'. When hash not selected
-event do not hired, becouse event 'hashchange' will be hired when hash is changes
+event do not hired, because event 'hashchange' will be hired when hash is changes
 */
 ["hashchange", "load"].forEach(e => window.addEventListener(e, controlRecipe));
+
+elements.recipe.addEventListener("click", e => {
+  if (e.target.matches(".btn-decrease, .btn-decrease *")) {
+    // decrease is clicked
+    if (state.recipe.serving >= 1) {
+      state.recipe.updatingServings("dec");
+      recipeView.updateServingUI(state.recipe);
+    }
+  } else if (e.target.matches(".btn-increase, .btn-increase *")) {
+    // increase is clicked
+    state.recipe.updatingServings("inc");
+    recipeView.updateServingUI(state.recipe);
+  }
+  console.log(state.recipe);
+});
