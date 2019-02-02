@@ -116,10 +116,12 @@ elements.recipe.addEventListener("click", e => {
     // decrease is clicked
     if (state.recipe.serving >= 1) {
       state.recipe.updatingServings("dec");
+      recipeView.updateServingUI(state.recipe);
     }
   } else if (e.target.matches(".btn-increase, .btn-increase *")) {
     // increase is clicked
     state.recipe.updatingServings("inc");
+    recipeView.updateServingUI(state.recipe);
   }
-  // console.log(state.recipe);
+  console.log(state.recipe);
 });

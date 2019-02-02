@@ -136,7 +136,6 @@ class Recipe {
     });
 
     this.serving = updateServingNum;
-    console.log(this.serving);
   }
 }
 

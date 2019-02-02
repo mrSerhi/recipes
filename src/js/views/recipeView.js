@@ -1,7 +1,10 @@
 import { elements } from "./base";
-import Fraction from "fraction.js";
+import Fraction from "fraction.js"; // not shure wtf, but without (.js) not working =(
 
-// formating count number with fraction
+/**
+ * Formating count number with fraction
+ * @param {Number} count ex. 2 or 2.5
+ */
 function formatCount(count) {
   // ex. count = 2.5 --> Fraction --> 2 1/2
   // ex. count = 0.5 --> Fraction --> 1/2
@@ -126,4 +129,18 @@ export const renderRecipe = recipeObj => {
 
 export const clearRecipe = () => {
   elements.recipe.innerHTML = "";
+};
+
+export const updateServingUI = recipe => {
+  document.querySelector(".recipe__info-data--people").textContent =
+    recipe.serving;
+
+  // update ingredients
+  const countElementNode = Array.from(
+    document.querySelectorAll(".recipe__count")
+  );
+
+  countElementNode.forEach((el, i) => {
+    el.textContent = formatCount(recipe.ingredients[i].count);
+  });
 };
