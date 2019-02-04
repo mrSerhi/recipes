@@ -5,6 +5,7 @@ import * as recipeView from "./views/recipeView";
 
 import Search from "./models/Search";
 import Recipe from "./models/Recipe";
+import ShoppingList from "./models/ShopingList";
 
 /** Global state of app:
  *  1.Search obj
@@ -123,5 +124,7 @@ elements.recipe.addEventListener("click", e => {
     state.recipe.updatingServings("inc");
     recipeView.updateServingUI(state.recipe);
   }
-  console.log(state.recipe);
 });
+
+// ShopingList controller
+window.l = new ShoppingList();
