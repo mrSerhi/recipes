@@ -12,7 +12,8 @@ export const elements = {
   result: getElementNode("results"),
   resultList: getElementNode("results__list"),
   pagination: getElementNode("results__pages"),
-  recipe: getElementNode("recipe")
+  recipe: getElementNode("recipe"),
+  shopingList: getElementNode("shopping__list")
 };
 
 export const spinner = parent => {
