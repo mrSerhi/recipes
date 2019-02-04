@@ -9,7 +9,7 @@ module.exports = {
   },
   mode: "none",
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
+    contentBase: path.resolve(__dirname, "dist"),
     compress: true
   },
   plugins: [

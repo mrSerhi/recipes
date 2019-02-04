@@ -16,6 +16,7 @@ class ShopingList {
     };
 
     this.items.push(item);
+    return item;
   }
 
   deleteItem(ID) {
