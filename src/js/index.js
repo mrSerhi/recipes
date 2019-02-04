@@ -1,10 +1,13 @@
 // index.js is a global contsoller
 import { elements, spinner, clearSpinner } from "./views/base";
-import * as searchView from "./views/searchView";
-import * as recipeView from "./views/recipeView";
 
 import Search from "./models/Search";
 import Recipe from "./models/Recipe";
+import ShopingList from "./models/ShopingList";
+
+import * as searchView from "./views/searchView";
+import * as recipeView from "./views/recipeView";
+import * as shopingListView from "./views/shopingListView";
 
 /** Global state of app:
  *  1.Search obj
@@ -13,6 +16,7 @@ import Recipe from "./models/Recipe";
  *  4.Liked recipes
  */
 const state = {};
+window.s = state; // for debugging
 
 /**
  * Search Controller
@@ -112,16 +116,51 @@ event do not hired, because event 'hashchange' will be hired when hash is change
 ["hashchange", "load"].forEach(e => window.addEventListener(e, controlRecipe));
 
 elements.recipe.addEventListener("click", e => {
-  if (e.target.matches(".btn-decrease, .btn-decrease *")) {
+  let target = e.target;
+
+  if (target.matches(".btn-decrease, .btn-decrease *")) {
     // decrease is clicked
-    if (state.recipe.serving >= 1) {
+    if (state.recipe.serving > 1) {
       state.recipe.updatingServings("dec");
       recipeView.updateServingUI(state.recipe);
     }
-  } else if (e.target.matches(".btn-increase, .btn-increase *")) {
+  } else if (target.matches(".btn-increase, .btn-increase *")) {
     // increase is clicked
     state.recipe.updatingServings("inc");
     recipeView.updateServingUI(state.recipe);
+  } else if (target.matches(".recipe__btn--add, .recipe__btn--add *")) {
+    controlShopingList();
   }
-  console.log(state.recipe);
+});
+
+// ShopingList controller
+// window.l = new ShoppingList(); // for debugging
+function controlShopingList() {
+  // create a new list if there in none yet
+  if (!state.shopingList) state.shopingList = new ShopingList(); // items []
+  // add each recipe like item to the shopingList with addaddItems() method
+  state.recipe.ingredients.forEach(el => {
+    const item = state.shopingList.addItems(el.count, el.unit, el.ingredient); // item will be added in items-array and returns where we render it in UI
+    shopingListView.renderItem(item);
+  });
+}
+
+// handle dalete and update for shopind items
+elements.shopingList.addEventListener("click", e => {
+  let target = e.target;
+  // should read id from each item
+  const id = target.closest(".shopping__item").dataset.itemid;
+
+  // handle the delete button
+  if (target.matches(".shopping__delete, .shopping__delete *")) {
+    // delete from state
+    state.shopingList.deleteItem(id);
+
+    // delete from UI
+    shopingListView.deleteItem(id);
+  } else if (target.matches(".shopping__count-value")) {
+    // handle cound update
+    const val = parseFloat(target.value, 10);
+    state.shopingList.updateCount(id, val);
+  }
 });

@@ -101,10 +101,10 @@ class Recipe {
           unit: splitedIngredient[unitIndex],
           ingredient: splitedIngredient.slice(unitIndex + 1)
         };
-      } else if (parseInt(splitedIngredient[0])) {
+      } else if (parseInt(splitedIngredient[0], 10)) {
         // comes 1st item is not a unit, but is a number
         objIngredients = {
-          count: parseInt(splitedIngredient[0]),
+          count: parseInt(splitedIngredient[0], 10),
           unit: "",
           ingredient: splitedIngredient.slice(1)
         };
@@ -128,7 +128,7 @@ class Recipe {
    */
   updatingServings(type) {
     // servings
-    const updateServingNum = type === "dec" ? --this.serving : ++this.serving;
+    const updateServingNum = type === "dec" ? this.serving - 1 : this.serving + 1;
 
     // ingredients
     this.ingredients.forEach(ing => {
