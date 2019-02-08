@@ -149,7 +149,7 @@ function controlShopingList() {
 elements.shopingList.addEventListener("click", e => {
   let target = e.target;
   // should read id from each item
-  const id = target.closest(".shopping__item").dataset.itemid;
+  let id = target.closest(".shopping__item").dataset.itemid;
 
   // handle the delete button
   if (target.matches(".shopping__delete, .shopping__delete *")) {

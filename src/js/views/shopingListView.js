@@ -2,7 +2,7 @@ import { elements } from "./base";
 
 export const renderItem = item => {
   const template = `
-    <li class="shopping__item data-itemid=${item.id}">
+    <li class="shopping__item" data-itemid=${item.id}>
       <div class="shopping__count">
           <input class="shopping__count-value" type="number" value="${
             item.count
@@ -23,5 +23,6 @@ export const renderItem = item => {
 
 export const deleteItem = ID => {
   const item = document.querySelector(`[data-itemid="${ID}"]`);
+
   if (item) item.parentElement.removeChild(item);
 };
