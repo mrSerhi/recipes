@@ -138,6 +138,7 @@ elements.recipe.addEventListener("click", e => {
 function controlShopingList() {
   // create a new list if there in none yet
   if (!state.shopingList) state.shopingList = new ShopingList(); // items []
+
   // add each recipe like item to the shopingList with addaddItems() method
   state.recipe.ingredients.forEach(el => {
     const item = state.shopingList.addItems(el.count, el.unit, el.ingredient); // item will be added in items-array and returns where we render it in UI
