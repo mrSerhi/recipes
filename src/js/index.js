@@ -9,6 +9,7 @@ import ShopingList from "./models/ShopingList";
 import * as searchView from "./views/searchView";
 import * as recipeView from "./views/recipeView";
 import * as shopingListView from "./views/shopingListView";
+import * as likeView from './views/likeView';
 
 /** Global state of app:
  *  1.Search obj
@@ -157,6 +158,8 @@ function controlLike() {
     );
 
     // 2. Toggle the like btn
+    likeView.toggleLikeBtn(true);
+
     // 3. Add like to the UI list
     console.log(state.like);
   } else {
@@ -165,6 +168,8 @@ function controlLike() {
     state.like.deleteLike(currentId);
 
     // 2. Toggle the like btn
+    likeView.toggleLikeBtn(false);
+
     // 3. remove like from the UI list
     console.log(state.like);
   }
