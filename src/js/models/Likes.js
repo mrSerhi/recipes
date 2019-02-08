@@ -28,3 +28,5 @@ class Like {
     return this.likes.length;
   }
 }
+
+export default Like;

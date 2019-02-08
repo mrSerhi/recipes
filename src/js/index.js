@@ -3,6 +3,7 @@ import { elements, spinner, clearSpinner } from "./views/base";
 
 import Search from "./models/Search";
 import Recipe from "./models/Recipe";
+import Like from "./models/Likes";
 import ShopingList from "./models/ShopingList";
 
 import * as searchView from "./views/searchView";
@@ -129,9 +130,45 @@ elements.recipe.addEventListener("click", e => {
     state.recipe.updatingServings("inc");
     recipeView.updateServingUI(state.recipe);
   } else if (target.matches(".recipe__btn--add, .recipe__btn--add *")) {
+    // add ingredients to the shopping list
     controlShopingList();
+  } else if (target.matches(".recipe__love, .recipe__love *")) {
+    controlLike();
   }
 });
+
+// LIKE CONTROLLER
+function controlLike() {
+  if (!state.like) state.like = new Like();
+
+  // we are needed for two stages in our like:
+  // 1. when we're cliked on btn and save recipe
+  // 2. when clicked in the next time - remove recipe from likes list (ex. toggle)
+  const currentId = state.recipe.id;
+
+  if (!state.like.isLiked(currentId)) {
+    // User has NOT yet liked current recipe
+    // 1. Add like to the state
+    state.like.addLike(
+      state.recipe.id,
+      state.recipe.title,
+      state.recipe.author,
+      state.recipe.imgUrl
+    );
+
+    // 2. Toggle the like btn
+    // 3. Add like to the UI list
+    console.log(state.like);
+  } else {
+    // User Has liked current recipe
+    // 1. remove like from the state
+    state.like.deleteLike(currentId);
+
+    // 2. Toggle the like btn
+    // 3. remove like from the UI list
+    console.log(state.like);
+  }
+}
 
 // ShopingList controller
 // window.l = new ShoppingList(); // for debugging
