@@ -9,7 +9,8 @@ function formatCount(count) {
   // ex. count = 2.5 --> Fraction --> 2 1/2
   // ex. count = 0.5 --> Fraction --> 1/2
   if (count) {
-    const [int, dec] = count
+      const roundedCount = Math.round(count * 10000) / 10000;
+    const [int, dec] = roundedCount
       .toString()
       .split(".")
       .map(num => +num);
