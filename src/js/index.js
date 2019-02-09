@@ -9,7 +9,7 @@ import ShopingList from "./models/ShopingList";
 import * as searchView from "./views/searchView";
 import * as recipeView from "./views/recipeView";
 import * as shopingListView from "./views/shopingListView";
-import * as likeView from './views/likeView';
+import * as likeView from "./views/likeView";
 
 /** Global state of app:
  *  1.Search obj
@@ -100,7 +100,7 @@ async function controlRecipe() {
       // render Recipe view
       clearSpinner();
       recipeView.clearRecipe();
-      recipeView.renderRecipe(state.recipe);
+      recipeView.renderRecipe(state.recipe, state.like.isLiked(ID));
 
       // console.log(state.recipe);
     } catch (e) {
@@ -138,9 +138,11 @@ elements.recipe.addEventListener("click", e => {
   }
 });
 
+state.like = new Like(); // for debug!!! global scope
+
 // LIKE CONTROLLER
 function controlLike() {
-  if (!state.like) state.like = new Like();
+  // if (!state.like) state.like = new Like();
 
   // we are needed for two stages in our like:
   // 1. when we're cliked on btn and save recipe

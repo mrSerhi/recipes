@@ -42,7 +42,12 @@ function createIngredient(ingrObj) {
     `;
 }
 
-export const renderRecipe = recipeObj => {
+/**
+ * Fn to rendering recipe central
+ * @param {Object} recipeObj
+ * @param {Boolean} isLiked returns from Like model
+ */
+export const renderRecipe = (recipeObj, isLiked) => {
   const template = `
     <figure class="recipe__fig">
         <img src="${recipeObj.imgUrl}" alt="${
@@ -88,7 +93,9 @@ export const renderRecipe = recipeObj => {
         </div>
         <button class="recipe__love">
             <svg class="header__likes">
-                <use href="img/icons.svg#icon-heart-outlined"></use>
+                <use href="img/icons.svg#icon-heart${
+                  isLiked ? "" : "-outlined"
+                }"></use>
             </svg>
         </button>
     </div>
