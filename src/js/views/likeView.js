@@ -1,4 +1,4 @@
-import { elements } from "./base";
+import { elements, trimTitleOflimit } from "./base";
 
 /**
  *
@@ -35,7 +35,7 @@ export const renderLikeMenu = like => {
               <img src="${like.img}" alt="${like.title}">
           </figure>
           <div class="likes__data">
-              <h4 class="likes__name">${like.title}</h4>
+              <h4 class="likes__name">${trimTitleOflimit(like.title)}</h4>
               <p class="likes__author">${like.author}</p>
           </div>
       </a>

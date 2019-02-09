@@ -34,3 +34,25 @@ export const clearSpinner = () => {
   // if set up loader when removing
   if (loader) loader.remove();
 };
+
+/* explanation:
+  const title = 'the big pizza with tomattos';
+  0 + cur.length(the) = 3 <= 17 - ['the']
+  3 + cur.length(big) = 6 <= 17 - ['the', 'big']
+  6 + cur.length(pizza) = 11 <= 17 - ['the', 'big', 'pizza']
+  11 + cur.length(with) = 15 <= 17 - ['the', 'big', 'pizza', 'with']
+  11 + cur.length(tomattos) = 23 <= 17 - return 11 + 8 (23)
+*/
+export function trimTitleOflimit(title, max = 17) {
+  const trimedTitle = [];
+  if (title.length > max) {
+    title.split(" ").reduce((acc, cur) => {
+      if (acc + cur.length <= max) {
+        trimedTitle.push(cur);
+      }
+      return acc + cur.length;
+    }, 0);
+    return `${trimedTitle.join(" ")}...`;
+  }
+  return title;
+}
