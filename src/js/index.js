@@ -9,6 +9,7 @@ import ShopingList from "./models/ShopingList";
 import * as searchView from "./views/searchView";
 import * as recipeView from "./views/recipeView";
 import * as shopingListView from "./views/shopingListView";
+import * as likeView from "./views/likeView";
 
 /** Global state of app:
  *  1.Search obj
@@ -99,7 +100,7 @@ async function controlRecipe() {
       // render Recipe view
       clearSpinner();
       recipeView.clearRecipe();
-      recipeView.renderRecipe(state.recipe);
+      recipeView.renderRecipe(state.recipe, state.like.isLiked(ID));
 
       // console.log(state.recipe);
     } catch (e) {
@@ -137,6 +138,20 @@ elements.recipe.addEventListener("click", e => {
   }
 });
 
+// hendle restoring likes from localStorage on load
+window.addEventListener("load", () => {
+  state.like = new Like(); // empty
+
+  // get likes from storage
+  state.like.readLikesFromStorage(); // fill likes[] of likes from storage
+
+  // hide/show btn from IU
+  likeView.toggleHeartLikeMenu(state.like.getNumberOfLikes());
+
+  // rendering each liked recipe
+  state.like.likes.forEach(like => likeView.renderLikeMenu(like));
+});
+
 // LIKE CONTROLLER
 function controlLike() {
   if (!state.like) state.like = new Like();
@@ -149,7 +164,7 @@ function controlLike() {
   if (!state.like.isLiked(currentId)) {
     // User has NOT yet liked current recipe
     // 1. Add like to the state
-    state.like.addLike(
+    const like = state.like.addLike(
       state.recipe.id,
       state.recipe.title,
       state.recipe.author,
@@ -157,17 +172,22 @@ function controlLike() {
     );
 
     // 2. Toggle the like btn
+    likeView.toggleLikeBtn(true);
+
     // 3. Add like to the UI list
-    console.log(state.like);
+    likeView.renderLikeMenu(like);
   } else {
     // User Has liked current recipe
     // 1. remove like from the state
     state.like.deleteLike(currentId);
 
     // 2. Toggle the like btn
+    likeView.toggleLikeBtn(false);
+
     // 3. remove like from the UI list
-    console.log(state.like);
+    likeView.removeLikeFromMenu(currentId);
   }
+  likeView.toggleHeartLikeMenu(state.like.getNumberOfLikes());
 }
 
 // ShopingList controller
