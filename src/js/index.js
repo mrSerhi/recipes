@@ -144,7 +144,7 @@ likeView.toggleHeartLikeMenu(state.like.getNumberOfLikes());
 
 // LIKE CONTROLLER
 function controlLike() {
-  // if (!state.like) state.like = new Like();
+  if (!state.like) state.like = new Like();
 
   // we are needed for two stages in our like:
   // 1. when we're cliked on btn and save recipe
@@ -154,7 +154,7 @@ function controlLike() {
   if (!state.like.isLiked(currentId)) {
     // User has NOT yet liked current recipe
     // 1. Add like to the state
-    state.like.addLike(
+    const like = state.like.addLike(
       state.recipe.id,
       state.recipe.title,
       state.recipe.author,
@@ -165,7 +165,7 @@ function controlLike() {
     likeView.toggleLikeBtn(true);
 
     // 3. Add like to the UI list
-    console.log(state.like);
+    likeView.renderLikeMenu(like);
   } else {
     // User Has liked current recipe
     // 1. remove like from the state
@@ -175,7 +175,7 @@ function controlLike() {
     likeView.toggleLikeBtn(false);
 
     // 3. remove like from the UI list
-    console.log(state.like);
+    likeView.removeLikeFromMenu(currentId);
   }
   likeView.toggleHeartLikeMenu(state.like.getNumberOfLikes());
 }

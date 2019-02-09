@@ -14,7 +14,8 @@ export const elements = {
   pagination: getElementNode("results__pages"),
   recipe: getElementNode("recipe"),
   shopingList: getElementNode("shopping__list"),
-  likesField: getElementNode("likes__field")
+  likesField: getElementNode("likes__field"),
+  likesMenu: getElementNode("likes__list")
 };
 
 export const spinner = parent => {
