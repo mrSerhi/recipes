@@ -138,9 +138,19 @@ elements.recipe.addEventListener("click", e => {
   }
 });
 
-// for debug!!! global scope
-state.like = new Like();
-likeView.toggleHeartLikeMenu(state.like.getNumberOfLikes());
+// hendle restoring likes from localStorage on load
+window.addEventListener("load", () => {
+  state.like = new Like(); // empty
+
+  // get likes from storage
+  state.like.readLikesFromStorage(); // fill likes[] of likes from storage
+
+  // hide/show btn from IU
+  likeView.toggleHeartLikeMenu(state.like.getNumberOfLikes());
+
+  // rendering each liked recipe
+  state.like.likes.forEach(like => likeView.renderLikeMenu(like));
+});
 
 // LIKE CONTROLLER
 function controlLike() {
