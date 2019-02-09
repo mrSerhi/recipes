@@ -138,7 +138,9 @@ elements.recipe.addEventListener("click", e => {
   }
 });
 
-state.like = new Like(); // for debug!!! global scope
+// for debug!!! global scope
+state.like = new Like();
+likeView.toggleHeartLikeMenu(state.like.getNumberOfLikes());
 
 // LIKE CONTROLLER
 function controlLike() {
@@ -175,6 +177,7 @@ function controlLike() {
     // 3. remove like from the UI list
     console.log(state.like);
   }
+  likeView.toggleHeartLikeMenu(state.like.getNumberOfLikes());
 }
 
 // ShopingList controller

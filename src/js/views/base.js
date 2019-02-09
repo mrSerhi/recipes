@@ -13,7 +13,8 @@ export const elements = {
   resultList: getElementNode("results__list"),
   pagination: getElementNode("results__pages"),
   recipe: getElementNode("recipe"),
-  shopingList: getElementNode("shopping__list")
+  shopingList: getElementNode("shopping__list"),
+  likesField: getElementNode("likes__field")
 };
 
 export const spinner = parent => {

@@ -1,3 +1,5 @@
+import { elements } from './base';
+
 /**
  *
  * @param {Boolean} isToggled if toogle - true else false
@@ -10,4 +12,12 @@ export const toggleLikeBtn = isToggled => {
   document
     .querySelector(".recipe__love use")
     .setAttribute("href", `img/icons.svg#${svgStr}`);
+};
+
+/**
+ * 
+ * @param {Number} numOfLikes 
+ */
+export const toggleHeartLikeMenu = numOfLikes => {
+  elements.likesField.getElementsByClassName.visibility = numOfLikes > 0 ? '' : 'hidden';
 };
